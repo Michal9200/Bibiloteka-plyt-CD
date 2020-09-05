@@ -1,38 +1,45 @@
 package io.mbab.sda.groupproject.menu.action;
 
-import io.mbab.sda.groupproject.entity.City;
+import io.mbab.sda.groupproject.entity.Albums;
 import io.mbab.sda.groupproject.menu.CustomScanner;
 import io.mbab.sda.groupproject.menu.MenuActionContext;
-import io.mbab.sda.groupproject.repository.CityRepository;
+import io.mbab.sda.groupproject.repository.AlbumsRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class CreateCityAction implements MenuAction {
-
+public class CreateAlbumAction implements MenuAction {
   private final CustomScanner scanner;
   private final MenuActionContext ctx;
-  private final CityRepository repository;
+  private final AlbumsRepository repository;
 
   @Override
   public void execute() {
     System.out.println("0) Przejdź do poprzedniego menu");
-    System.out.println("Podaj nazwę miasta:");
+    System.out.println("Podaj nazwę albumu:");
 
     var input = scanner.nextLine();
 
     if (pressedZero(input)) return;
 
-    var builder = City.builder().name(input);
+    var builder = Albums.builder().albumName(input);
 
-    System.out.println("Podaj nazwę państwa:");
+    System.out.println("Podaj autora:");
 
     input = scanner.nextLine();
 
     if (pressedZero(input)) return;
 
-    var city = builder.country(input).build();
+     builder = builder.author(input);
 
-    repository.create(city);
+      System.out.println("Podaj pisoenkę:");
+
+      input = scanner.nextLine();
+
+      if (pressedZero(input)) return;
+
+      var album = builder.song(input).build();
+
+    repository.create(album);
     ctx.use(MainAction.class).execute();
   }
 
@@ -43,4 +50,4 @@ public class CreateCityAction implements MenuAction {
     }
     return false;
   }
-}
+    }
