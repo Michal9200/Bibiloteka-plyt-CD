@@ -36,8 +36,14 @@ public class MenuActionContext {
         ViewAlbumAction.class,
         new ViewAlbumAction(this, repositoryFactory.get(AlbumsRepository.class)));
     holder.put(
-            AddSongToAlbum.class,
-            new AddSongToAlbum(scanner, this, repositoryFactory.get(SongsRepository.class), repositoryFactory.get(AlbumsRepository.class)));
+        DisplaySongsForAlbum.class,
+        new DisplaySongsForAlbum(this, scanner, repositoryFactory.get(SongsRepository.class)));
+    holder.put(
+        AddSongToAlbum.class,
+        new AddSongToAlbum(
+            scanner,
+            this,
+            repositoryFactory.get(SongsRepository.class),
+            repositoryFactory.get(AlbumsRepository.class)));
   }
-
 }

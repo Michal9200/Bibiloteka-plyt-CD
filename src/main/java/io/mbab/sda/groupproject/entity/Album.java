@@ -23,7 +23,7 @@ public class Album {
   private String author;
 
   @Builder(toBuilder = true)
-  public Album(Integer id, String albumName, String author, List<Song> songs) {
+  public Album(Integer id, String albumName, String author) {
     this.id = id;
     this.albumName = albumName;
     this.author = author;
