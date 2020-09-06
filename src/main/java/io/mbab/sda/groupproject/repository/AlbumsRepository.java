@@ -4,8 +4,9 @@ import io.mbab.sda.groupproject.entity.Albums;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.*;
+import javax.persistence.NoResultException;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class AlbumsRepository implements CrudRepository<Albums, Integer> {
@@ -18,14 +19,17 @@ public class AlbumsRepository implements CrudRepository<Albums, Integer> {
   }
 
   @Override
-  public Albums findById(Integer id) {
-
-    var criteriaBuilder = em.getCriteriaBuilder();
-    var criteriaQuery = criteriaBuilder.createQuery(Albums.class);
-    var root = criteriaQuery.from(Albums.class);
-    var predicate = criteriaBuilder.equal(root.get("id"), id);
-    var entity = em.createQuery(criteriaQuery.select(root).where(predicate)).getSingleResult();
-    return entity;
+  public Optional<Albums> findById(Integer id) {
+    try {
+      var criteriaBuilder = em.getCriteriaBuilder();
+      var criteriaQuery = criteriaBuilder.createQuery(Albums.class);
+      var root = criteriaQuery.from(Albums.class);
+      var predicate = criteriaBuilder.equal(root.get("id"), id);
+      var entity = em.createQuery(criteriaQuery.select(root).where(predicate)).getSingleResult();
+      return Optional.of(entity);
+    } catch (NoResultException e) {
+      return Optional.empty();
+    }
   }
 
   @Override
@@ -60,15 +64,12 @@ public class AlbumsRepository implements CrudRepository<Albums, Integer> {
     return em.createQuery(criteriaQuery.select(root).where(predicate)).getResultList();
   }
 
-  public Albums getByAlbumName(String albumName) {
+  public List<Albums> getByAlbumName(String albumName) {
 
     var criteriaBuilder = em.getCriteriaBuilder();
     var criteriaQuery = criteriaBuilder.createQuery(Albums.class);
     var root = criteriaQuery.from(Albums.class);
     var predicate = criteriaBuilder.equal(root.get("albumName"), albumName);
-    return em.createQuery(criteriaQuery.select(root).where(predicate)).getSingleResult();
+    return em.createQuery(criteriaQuery.select(root).where(predicate)).getResultList();
   }
-
-
-
 }

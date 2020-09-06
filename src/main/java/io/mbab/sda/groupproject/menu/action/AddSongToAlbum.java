@@ -9,6 +9,7 @@ import io.mbab.sda.groupproject.repository.SongsRepository;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class AddSongToAlbum implements MenuAction {
@@ -28,7 +29,7 @@ public class AddSongToAlbum implements MenuAction {
 
     if (pressedZero(input)) return;
 
-    var builder = Songs.builder().title(input);
+    Songs.SongsBuilder builder = Songs.builder().title(input);
 
     System.out.println("Podaj autora piosenki");
 
@@ -36,13 +37,19 @@ public class AddSongToAlbum implements MenuAction {
 
     builder.author(input).build();
 
-    System.out.println("Podaj nr albumu");
+    findAlbum(builder);
 
-    input = scanner.nextLine();
+    Songs song = builder.build();
 
-    var album = albumsRepository.findById(Integer.valueOf(input));
-
-    var song = builder.album(album).build();
+//    System.out.println("Podaj nr albumu");
+//
+//    input = scanner.nextLine();
+//
+//    var optional = albumsRepository.findById(Integer.valueOf(input));
+//
+//    Albums album = optional.get();
+//
+//    var song = builder.album(album).build();
 
     if (pressedZero(input)) return;
 
@@ -57,4 +64,22 @@ public class AddSongToAlbum implements MenuAction {
     }
     return false;
   }
+
+  private void findAlbum(Songs.SongsBuilder builder) {
+    System.out.println("Podaj nr albumu");
+    var input = scanner.nextLine();
+
+    if (pressedZero(input)) return;
+
+    albumsRepository
+        .findById(Integer.valueOf(input))
+        .ifPresentOrElse(
+            album -> builder.album(album),
+            () -> {
+              System.out.println("Nie znaleziono albumu o numerze " + input);
+            });
+
+  }
+
+
 }

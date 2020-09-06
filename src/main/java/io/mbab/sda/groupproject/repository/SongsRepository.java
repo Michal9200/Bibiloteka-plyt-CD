@@ -5,11 +5,13 @@ import io.mbab.sda.groupproject.entity.Songs;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 public class SongsRepository implements CrudRepository<Songs, Integer> {
@@ -22,14 +24,17 @@ public class SongsRepository implements CrudRepository<Songs, Integer> {
   }
 
   @Override
-  public Songs findById(Integer integer) {
-
+  public Optional<Songs> findById(Integer integer) {
+      try{
     CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
     CriteriaQuery<Songs> criteriaQuery = criteriaBuilder.createQuery(Songs.class);
     Root<Songs> root = criteriaQuery.from(Songs.class);
     Predicate predicate = criteriaBuilder.equal(root.get("id"), integer);
     Songs entity = em.createQuery(criteriaQuery.select(root).where(predicate)).getSingleResult();
-    return entity;
+    return Optional.of(entity);
+    } catch (NoResultException e) {
+          return Optional.empty();
+      }
   }
 
   @Override
@@ -63,11 +68,11 @@ public class SongsRepository implements CrudRepository<Songs, Integer> {
     return em.createQuery(criteriaQuery.select(root).where(predicate)).getResultList();
   }
 
-  public Songs getByTitle(String title) {
+  public List<Songs> getByTitle(String title) {
     var criteriaBuilder = em.getCriteriaBuilder();
     var criteriaQuery = criteriaBuilder.createQuery(Songs.class);
     var root = criteriaQuery.from(Songs.class);
-    var predicate = criteriaBuilder.equal(root.get("title"), title);
-    return em.createQuery(criteriaQuery.select(root).where(predicate)).getSingleResult();
+    var predicate = criteriaBuilder.like(root.get("title"), title);
+    return em.createQuery(criteriaQuery.select(root).where(predicate)).getResultList();
   }
 }

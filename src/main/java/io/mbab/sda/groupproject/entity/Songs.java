@@ -12,7 +12,7 @@ public class Songs {
 
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
-  private Integer songId;
+  private Integer id;
 
   @Column(length = 64, nullable = false)
   private String title;
@@ -20,8 +20,7 @@ public class Songs {
   @Column(length = 64, nullable = false)
   private String author;
 
-  @ManyToOne(fetch = FetchType.EAGER)
-  @JoinColumn(name = "id")
+  @ManyToOne
   private Albums album;
 
   @Builder(toBuilder = true)
