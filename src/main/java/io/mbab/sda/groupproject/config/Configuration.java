@@ -2,6 +2,7 @@ package io.mbab.sda.groupproject.config;
 
 import com.mysql.cj.jdbc.MysqlDataSource;
 import io.mbab.sda.groupproject.entity.Albums;
+import io.mbab.sda.groupproject.entity.Songs;
 
 import javax.sql.DataSource;
 
@@ -28,6 +29,6 @@ public final class Configuration {
 
   /* W tej metodzie należy zwrócić liste klas które są encjami, aplikacja samodzielnie ich nie zmapuje */
   public static Class[] getEntityClass() {
-    return new Class[] {Albums.class};
+    return new Class[] {Albums.class , Songs.class};
   }
 }

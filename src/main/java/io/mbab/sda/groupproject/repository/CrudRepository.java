@@ -1,5 +1,7 @@
 package io.mbab.sda.groupproject.repository;
 
+import io.mbab.sda.groupproject.entity.Albums;
+
 import java.util.List;
 
 public interface CrudRepository<T, ID> {

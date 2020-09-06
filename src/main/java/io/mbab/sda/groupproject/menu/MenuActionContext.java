@@ -1,11 +1,9 @@
 package io.mbab.sda.groupproject.menu;
 
-import io.mbab.sda.groupproject.menu.action.CreateAlbumAction;
-import io.mbab.sda.groupproject.menu.action.MainAction;
-import io.mbab.sda.groupproject.menu.action.MenuAction;
-import io.mbab.sda.groupproject.menu.action.ViewAlbumAction;
+import io.mbab.sda.groupproject.menu.action.*;
 import io.mbab.sda.groupproject.repository.AlbumsRepository;
 import io.mbab.sda.groupproject.repository.CrudRepositoryFactory;
+import io.mbab.sda.groupproject.repository.SongsRepository;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -37,5 +35,9 @@ public class MenuActionContext {
     holder.put(
         ViewAlbumAction.class,
         new ViewAlbumAction(this, repositoryFactory.get(AlbumsRepository.class)));
+    holder.put(
+            AddSongToAlbum.class,
+            new AddSongToAlbum(scanner, this, repositoryFactory.get(SongsRepository.class), repositoryFactory.get(AlbumsRepository.class)));
   }
+
 }
