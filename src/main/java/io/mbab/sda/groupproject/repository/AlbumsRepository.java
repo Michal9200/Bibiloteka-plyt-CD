@@ -1,6 +1,6 @@
 package io.mbab.sda.groupproject.repository;
 
-import io.mbab.sda.groupproject.entity.Albums;
+import io.mbab.sda.groupproject.entity.Album;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
@@ -9,21 +9,21 @@ import java.util.List;
 import java.util.Optional;
 
 @RequiredArgsConstructor
-public class AlbumsRepository implements CrudRepository<Albums, Integer> {
+public class AlbumsRepository implements CrudRepository<Album, Integer> {
 
   private final EntityManager em;
 
   @Override
-  public List<Albums> getAll() {
-    return em.createQuery("FROM Albums", Albums.class).getResultList();
+  public List<Album> getAll() {
+    return em.createQuery("FROM Albums", Album.class).getResultList();
   }
 
   @Override
-  public Optional<Albums> findById(Integer id) {
+  public Optional<Album> findById(Integer id) {
     try {
       var criteriaBuilder = em.getCriteriaBuilder();
-      var criteriaQuery = criteriaBuilder.createQuery(Albums.class);
-      var root = criteriaQuery.from(Albums.class);
+      var criteriaQuery = criteriaBuilder.createQuery(Album.class);
+      var root = criteriaQuery.from(Album.class);
       var predicate = criteriaBuilder.equal(root.get("id"), id);
       var entity = em.createQuery(criteriaQuery.select(root).where(predicate)).getSingleResult();
       return Optional.of(entity);
@@ -33,7 +33,7 @@ public class AlbumsRepository implements CrudRepository<Albums, Integer> {
   }
 
   @Override
-  public Albums create(Albums entity) {
+  public Album create(Album entity) {
     em.getTransaction().begin();
     em.persist(entity);
     em.getTransaction().commit();
@@ -41,34 +41,34 @@ public class AlbumsRepository implements CrudRepository<Albums, Integer> {
   }
 
   @Override
-  public Albums update(Albums entity) {
+  public Album update(Album entity) {
     return em.merge(entity);
   }
 
   @Override
   public void delete(Integer integer) {
     var criteriaBuilder = em.getCriteriaBuilder();
-    var criteriaDelete = criteriaBuilder.createCriteriaDelete(Albums.class);
-    var root = criteriaDelete.from(Albums.class);
+    var criteriaDelete = criteriaBuilder.createCriteriaDelete(Album.class);
+    var root = criteriaDelete.from(Album.class);
     var predicate = criteriaBuilder.equal(root.get("id"), integer);
 
     em.createQuery(criteriaDelete.where(predicate)).executeUpdate();
   }
 
-  public List<Albums> findByAuthor(String author) {
+  public List<Album> findByAuthor(String author) {
 
     var criteriaBuilder = em.getCriteriaBuilder();
-    var criteriaQuery = criteriaBuilder.createQuery(Albums.class);
-    var root = criteriaQuery.from(Albums.class);
+    var criteriaQuery = criteriaBuilder.createQuery(Album.class);
+    var root = criteriaQuery.from(Album.class);
     var predicate = criteriaBuilder.equal(root.get("author"), author);
     return em.createQuery(criteriaQuery.select(root).where(predicate)).getResultList();
   }
 
-  public List<Albums> getByAlbumName(String albumName) {
+  public List<Album> getByAlbumName(String albumName) {
 
     var criteriaBuilder = em.getCriteriaBuilder();
-    var criteriaQuery = criteriaBuilder.createQuery(Albums.class);
-    var root = criteriaQuery.from(Albums.class);
+    var criteriaQuery = criteriaBuilder.createQuery(Album.class);
+    var root = criteriaQuery.from(Album.class);
     var predicate = criteriaBuilder.equal(root.get("albumName"), albumName);
     return em.createQuery(criteriaQuery.select(root).where(predicate)).getResultList();
   }

@@ -3,30 +3,30 @@ package io.mbab.sda.groupproject.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 @Getter
+@Builder
 @ToString
 @NoArgsConstructor
-public class Songs {
+public class Album {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.AUTO)
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Integer id;
 
   @Column(length = 64, nullable = false)
-  private String title;
+  private String albumName;
 
   @Column(length = 64, nullable = false)
   private String author;
 
-  @ManyToOne
-  private Albums album;
-
   @Builder(toBuilder = true)
-  public Songs(String title, String author, Albums album) {
-    this.title = title;
+  public Album(Integer id, String albumName, String author, List<Song> songs) {
+    this.id = id;
+    this.albumName = albumName;
     this.author = author;
-    this.album = album;
   }
+
 }

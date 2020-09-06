@@ -1,6 +1,6 @@
 package io.mbab.sda.groupproject.menu.action;
 
-import io.mbab.sda.groupproject.entity.Albums;
+import io.mbab.sda.groupproject.entity.Album;
 import io.mbab.sda.groupproject.menu.CustomScanner;
 import io.mbab.sda.groupproject.menu.MenuActionContext;
 import io.mbab.sda.groupproject.repository.AlbumsRepository;
@@ -22,7 +22,7 @@ public class CreateAlbumAction implements MenuAction {
 
     if (pressedZero(input)) return;
 
-    Albums.AlbumsBuilder builder = Albums.builder().albumName(input);
+    Album.AlbumBuilder builder = Album.builder().albumName(input);
 
     System.out.println("Podaj autora:");
 

@@ -1,15 +1,12 @@
 package io.mbab.sda.groupproject.menu.action;
 
-import io.mbab.sda.groupproject.entity.Albums;
-import io.mbab.sda.groupproject.entity.Songs;
+import io.mbab.sda.groupproject.entity.Song;
+import io.mbab.sda.groupproject.entity.Song.SongBuilder;
 import io.mbab.sda.groupproject.menu.CustomScanner;
 import io.mbab.sda.groupproject.menu.MenuActionContext;
 import io.mbab.sda.groupproject.repository.AlbumsRepository;
 import io.mbab.sda.groupproject.repository.SongsRepository;
 import lombok.RequiredArgsConstructor;
-
-import javax.persistence.EntityManager;
-import java.util.Optional;
 
 @RequiredArgsConstructor
 public class AddSongToAlbum implements MenuAction {
@@ -29,7 +26,7 @@ public class AddSongToAlbum implements MenuAction {
 
     if (pressedZero(input)) return;
 
-    Songs.SongsBuilder builder = Songs.builder().title(input);
+    var builder = Song.builder().title(input);
 
     System.out.println("Podaj autora piosenki");
 
@@ -39,7 +36,7 @@ public class AddSongToAlbum implements MenuAction {
 
     findAlbum(builder);
 
-    Songs song = builder.build();
+    Song song = builder.build();
 
 //    System.out.println("Podaj nr albumu");
 //
@@ -65,7 +62,7 @@ public class AddSongToAlbum implements MenuAction {
     return false;
   }
 
-  private void findAlbum(Songs.SongsBuilder builder) {
+  private void findAlbum(SongBuilder builder) {
     System.out.println("Podaj nr albumu");
     var input = scanner.nextLine();
 
