@@ -13,8 +13,9 @@ public class MainAction implements MenuAction {
   @Override
   public void execute() {
     System.out.println("0) Zamknij aplikację");
-    System.out.println("1) Dodaj miasto");
-    System.out.println("2) Wyswietl miasta");
+    System.out.println("1) Dodaj album");
+    System.out.println("2) Wyswietl albumy");
+    System.out.println("3) Dodaj piosenkę do albumu");
 
     var input = scanner.nextLine();
 
@@ -24,14 +25,20 @@ public class MainAction implements MenuAction {
     }
 
     if (input.equals("1")) {
-      ctx.use(CreateCityAction.class).execute();
+      ctx.use(CreateAlbumAction.class).execute();
       return;
     }
 
     if (input.equals("2")) {
-      ctx.use(ViewCitiesAction.class).execute();
+      ctx.use(ViewAlbumAction.class).execute();
       return;
     }
+
+    if (input.equals("3")) {
+      ctx.use(AddSongToAlbum.class).execute();
+      return;
+    }
+
 
     System.out.println("Wprowadzono nieprawidłowa wartość!");
     execute();
