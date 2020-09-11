@@ -45,5 +45,12 @@ public class MenuActionContext {
             this,
             repositoryFactory.get(SongsRepository.class),
             repositoryFactory.get(AlbumsRepository.class)));
+    holder.put(
+            FindAlbumsByTitleAndArtist.class,
+            new FindAlbumsByTitleAndArtist(this, scanner, repositoryFactory.get(AlbumsRepository.class)));
+    holder.put(
+            FindSongsByTitleAndArtist.class,
+            new FindSongsByTitleAndArtist(this, scanner, repositoryFactory.get(SongsRepository.class)));
+
   }
 }
