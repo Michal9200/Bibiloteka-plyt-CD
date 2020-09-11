@@ -15,7 +15,7 @@ public class AlbumsRepository implements CrudRepository<Album, Integer> {
 
   @Override
   public List<Album> getAll() {
-    return em.createQuery("FROM Albums", Album.class).getResultList();
+    return em.createQuery("FROM Album", Album.class).getResultList();
   }
 
   @Override

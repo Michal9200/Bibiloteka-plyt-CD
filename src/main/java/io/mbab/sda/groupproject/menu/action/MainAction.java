@@ -16,6 +16,7 @@ public class MainAction implements MenuAction {
     System.out.println("1) Dodaj album");
     System.out.println("2) Wyswietl albumy");
     System.out.println("3) Dodaj piosenkę do albumu");
+    System.out.println("4) Wyświetl utwory danego albumu");
 
     var input = scanner.nextLine();
 
@@ -39,6 +40,10 @@ public class MainAction implements MenuAction {
       return;
     }
 
+    if (input.equals("4")) {
+      ctx.use(DisplaySongsForAlbum.class).execute();
+      return;
+    }
 
     System.out.println("Wprowadzono nieprawidłowa wartość!");
     execute();
