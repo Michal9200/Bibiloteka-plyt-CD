@@ -67,7 +67,8 @@ public class SongsRepository implements CrudRepository<Song, Integer> {
     return em.createQuery(criteriaQuery.select(root).where(predicate)).getResultList();
   }
 
-  public List<Song> getByTitle(String title) {
+
+  public List<Song> findByTitle(String title) {
     var criteriaBuilder = em.getCriteriaBuilder();
     var criteriaQuery = criteriaBuilder.createQuery(Song.class);
     var root = criteriaQuery.from(Song.class);
@@ -75,11 +76,11 @@ public class SongsRepository implements CrudRepository<Song, Integer> {
     return em.createQuery(criteriaQuery.select(root).where(predicate)).getResultList();
   }
 
-  public List<Song>  findByAlbum(Integer integer) {
+  public List<Song> findByAlbumId(Integer id) {
       CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
       CriteriaQuery<Song> criteriaQuery = criteriaBuilder.createQuery(Song.class);
       Root<Song> root = criteriaQuery.from(Song.class);
-      Predicate predicate = criteriaBuilder.equal(root.get("album"), integer);
+      Predicate predicate = criteriaBuilder.equal(root.get("album"), id);
       return em.createQuery(criteriaQuery.select(root).where(predicate)).getResultList();
   }
 }

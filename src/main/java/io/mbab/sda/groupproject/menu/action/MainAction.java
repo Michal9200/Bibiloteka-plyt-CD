@@ -17,6 +17,8 @@ public class MainAction implements MenuAction {
     System.out.println("2) Wyswietl albumy");
     System.out.println("3) Dodaj piosenkę do albumu");
     System.out.println("4) Wyświetl utwory danego albumu");
+    System.out.println("5) Wyszukaj album");
+    System.out.println("6) Wyświetl utwory danego albumu");
 
     var input = scanner.nextLine();
 
@@ -42,6 +44,16 @@ public class MainAction implements MenuAction {
 
     if (input.equals("4")) {
       ctx.use(DisplaySongsForAlbum.class).execute();
+      return;
+    }
+
+    if (input.equals("5")) {
+      ctx.use(FindAlbumsByTitleAndArtist.class).execute();
+      return;
+    }
+
+    if (input.equals("6")) {
+      ctx.use(FindSongsByTitleAndArtist.class).execute();
       return;
     }
 

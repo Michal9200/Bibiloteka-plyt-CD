@@ -5,8 +5,10 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Predicate;
 
 @RequiredArgsConstructor
 public class AlbumsRepository implements CrudRepository<Album, Integer> {
@@ -64,7 +66,7 @@ public class AlbumsRepository implements CrudRepository<Album, Integer> {
     return em.createQuery(criteriaQuery.select(root).where(predicate)).getResultList();
   }
 
-  public List<Album> getByAlbumName(String albumName) {
+  public List<Album> findByAlbumName(String albumName) {
 
     var criteriaBuilder = em.getCriteriaBuilder();
     var criteriaQuery = criteriaBuilder.createQuery(Album.class);
@@ -72,4 +74,6 @@ public class AlbumsRepository implements CrudRepository<Album, Integer> {
     var predicate = criteriaBuilder.equal(root.get("albumName"), albumName);
     return em.createQuery(criteriaQuery.select(root).where(predicate)).getResultList();
   }
+
+
 }

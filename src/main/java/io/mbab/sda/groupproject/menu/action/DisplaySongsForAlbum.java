@@ -22,7 +22,7 @@ public class DisplaySongsForAlbum implements MenuAction {
 
     if (pressedZero(input)) return;
 
-    var songs = songsRepository.findByAlbum(Integer.valueOf(input));
+    var songs = songsRepository.findByAlbumId(Integer.valueOf(input));
 
     if (songs.isEmpty()) {
       System.out.println("Brak danych do wyświetlenia");
