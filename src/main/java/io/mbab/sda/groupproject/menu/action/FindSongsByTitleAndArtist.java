@@ -23,15 +23,15 @@ public class FindSongsByTitleAndArtist implements MenuAction {
 
         if (pressedZero(input)) return;
 
-        var albums = songRepository.findByAuthor(input);
+        var songs = songRepository.findByAuthor(input);
 
-        albums.addAll(songRepository.findByTitle(input));
+        songs.addAll(songRepository.findByTitle(input));
 
-        if (albums.isEmpty()) {
+        if (songs.isEmpty()) {
             System.out.println("Brak danych do wyświetlenia");
         } else {
             System.out.println("\n");
-            albums.forEach(System.out::println);
+            songs.forEach(System.out::println);
             System.out.println("\n");
         }
 

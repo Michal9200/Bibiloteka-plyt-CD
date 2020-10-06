@@ -6,7 +6,6 @@ import javax.persistence.*;
 
 @Entity
 @Getter
-@ToString
 @NoArgsConstructor
 public class Song {
 
@@ -20,7 +19,7 @@ public class Song {
   @Column(length = 64, nullable = false)
   private String author;
 
-  @ManyToOne
+  @ManyToOne(cascade = CascadeType.MERGE)
   private Album album;
 
   @Builder(toBuilder = true)
@@ -29,5 +28,10 @@ public class Song {
     this.title = title;
     this.author = author;
     this.album = album;
+  }
+
+  @Override
+  public String toString() {
+    return  id + ") " +  " title: " + title +  ", author: " + author +  ", album name: " + album;
   }
 }

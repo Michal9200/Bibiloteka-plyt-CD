@@ -5,6 +5,7 @@ import io.mbab.sda.groupproject.repository.AlbumsRepository;
 import io.mbab.sda.groupproject.repository.CrudRepositoryFactory;
 import io.mbab.sda.groupproject.repository.SongsRepository;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,7 +25,11 @@ public class MenuActionContext {
 
   public void execute() {
     if (action == null) throw new RuntimeException("Menu action not set");
-    action.execute();
+    try {
+      action.execute();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
   }
 
   private void initHolder(CustomScanner scanner, CrudRepositoryFactory repositoryFactory) {
@@ -51,6 +56,11 @@ public class MenuActionContext {
     holder.put(
             FindSongsByTitleAndArtist.class,
             new FindSongsByTitleAndArtist(this, scanner, repositoryFactory.get(SongsRepository.class)));
-
+    holder.put(
+            WriteLibraryCDToJason.class,
+            new WriteLibraryCDToJason(this, repositoryFactory.get(AlbumsRepository.class), repositoryFactory.get(SongsRepository.class)));
+    holder.put(
+            ConvertJsonToEniti.class,
+            new ConvertJsonToEniti(this, repositoryFactory.get(SongsRepository.class), repositoryFactory.get(AlbumsRepository.class)));
   }
 }
